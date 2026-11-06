@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ambivience</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<script>try { if (localStorage.getItem('ambivience-theme') === 'dark') document.documentElement.dataset.theme = 'dark'; } catch (e) {}</script>
 <meta name="description" content="Ambivience gathers your Watch Later videos, bookmarks, Instagram saves, and notes into one calm wall, kept as plain markdown in your Obsidian vault. Free for macOS, Windows, and Linux.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://ambivience.com/">
@@ -16,8 +17,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233f5e4a'/%3E%3Crect x='7' y='7' width='8' height='11' rx='2' fill='%23f6f3ee'/%3E%3Crect x='17' y='7' width='8' height='7' rx='2' fill='%23f6f3ee'/%3E%3Crect x='7' y='20' width='8' height='5' rx='2' fill='%23f6f3ee'/%3E%3Crect x='17' y='16' width='8' height='9' rx='2' fill='%23f6f3ee'/%3E%3C/svg%3E">
 <style>
-/* Layout: the hero is a live Ambivience wall with the headline as its first, wide tile; the rest is a two-track page (heading left, content right). */
+/* Layout: a full-width headline, then the sample wall; the rest is a two-track page (heading left, content right). */
+/* Theme: light by default, whatever the system setting; the header toggle sets data-theme="dark" and remembers it. */
 :root {
+  color-scheme: light;
   /* Color: the app's own tokens from docs/DESIGN.md */
   --bg: #f6f3ee;
   --surface: #ffffff;
@@ -48,16 +51,6 @@
   --radius-control: 10px;
   --ease: cubic-bezier(0.2, 0, 0, 1);
   --page: 76rem;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #141311; --surface: #1d1b18; --ink: #ede8e1; --muted: #a39b91; --line: #2c2925;
-    --accent: #8fb59a; --accent-ink: #141311;
-    --tint-1: #2a251e; --tint-2: #222a23; --tint-3: #20262c; --tint-4: #2c2320; --tint-5: #26222c; --tint-ig: #2d2321;
-    --scrim: rgb(29 27 24 / 0.88); --chip: rgb(0 0 0 / 0.72); --chip-ink: #ede8e1;
-    --shadow-hover: 0 6px 20px rgb(0 0 0 / 0.40); --code-bg: #191714;
-  }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -119,6 +112,16 @@ a { color: inherit; }
 .site-nav a.text { text-decoration: none; color: var(--muted); }
 .site-nav a.text:hover { color: var(--ink); }
 @media (max-width: 560px) { .site-nav a.text { display: none; } }
+.theme-btn {
+  width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
+  color: var(--muted); display: inline-grid; place-items: center; cursor: pointer;
+  transition: background-color 150ms var(--ease), color 150ms var(--ease);
+}
+.theme-btn:hover { background: var(--surface); color: var(--ink); }
+.theme-btn svg { width: 20px; height: 20px; }
+.theme-btn .sun, :root[data-theme="dark"] .theme-btn .moon { display: none; }
+:root[data-theme="dark"] .theme-btn .sun { display: block; }
+@media (max-width: 560px) { .site-nav { gap: 12px; } }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -359,6 +362,7 @@ h2 {
 .source dt svg { width: 18px; height: 18px; color: var(--muted); flex: none; }
 .source dd { font-family: var(--font-serif); font-size: 17px; line-height: 1.5; color: var(--ink); }
 .sources + .prose { margin-top: 28px; }
+.prose + .feeds { margin-top: 32px; }
 
 /* Capture */
 .capture { display: grid; gap: 20px; align-items: center; grid-template-columns: minmax(0, 1fr); margin-top: 36px; }
@@ -424,8 +428,11 @@ h2 {
 .site-footer p a { color: var(--ink); text-underline-offset: 3px; }
 
 /* Footer */
-.site-footer { max-width: var(--page); margin: 0 auto; padding-block: 48px 64px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; }
+.site-footer { max-width: var(--page); margin: 0 auto; padding-block: 48px 64px; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .site-footer p { font-size: 14px; color: var(--muted); }
+.foot-brand, .foot-meta { display: grid; gap: 8px; }
+.foot-brand p { font-family: var(--font-serif); font-size: 17px; font-style: italic; }
+@media (min-width: 640px) { .foot-meta { text-align: right; } }
 
 /* ---------- Detail view (mirrors the app's: full screen, centered 40rem column) ---------- */
 .wall .card { cursor: pointer; }
@@ -544,6 +551,8 @@ html:has(.detail[open]) { overflow: hidden; }
     <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
     <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6H6a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-6M11 13l9-9M15 4h5v5"/></symbol>
     <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M5 7l1 12a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-12M9 7V4h6v3"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
   </defs>
 </svg>
@@ -554,6 +563,7 @@ html:has(.detail[open]) { overflow: hidden; }
     <nav class="site-nav" aria-label="Main">
       <a class="text" href="#how">How it works</a>
       <a class="text" href="#faq">Questions</a>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="Switch to dark mode" title="Switch to dark mode"><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg><svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg></button>
       <a class="btn btn-primary" href="#download">Download</a>
     </nav>
   </div>
@@ -563,7 +573,7 @@ html:has(.detail[open]) { overflow: hidden; }
   <section class="hero gutter" aria-labelledby="hero-title">
     <div class="lead">
       <h1 id="hero-title">Everything you saved, coming back around.</h1>
-      <p>Ambivience gathers your Watch Later videos, bookmarks, Instagram saves, and notes into one calm wall, kept as plain markdown in your Obsidian vault.</p>
+      <p>Every app has an algorithm deciding what you see next. Ambivience lets you set your own. It gathers your Watch Later videos, bookmarks, Instagram saves and notes into one wall you curate, and brings them back in the order you pick.</p>
       <div class="actions">
         <a class="btn btn-primary btn-lg" href="#download">Download Ambivience</a>
         <span class="fine">Free for personal use. macOS, Windows, and Linux. No account.</span>
@@ -751,33 +761,49 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
   </section>
 
   <section class="section gutter" aria-labelledby="why-title">
-    <h2 id="why-title" class="sr-only">Why Ambivience</h2>
-    <p class="statement">Saving something feels like progress. Then it sinks into Watch Later, a bookmarks folder, or a saved tab on Instagram, and you never see it again.</p>
+    <h2 id="why-title" class="statement">Saving something feels like progress.</h2>
     <div class="prose muted">
-      <p>Ambivience pulls those saves into one place and keeps putting them back in front of you, a few at a time, in an order you pick. Open it like a scrapbook you made, not a feed built to hold your attention.</p>
+      <p>Then it sinks into Watch Later, a bookmarks folder, or a saved tab on Instagram. Meanwhile, most feeds are tuned to keep you looking for the next new thing.</p>
+      <p>Ambivience turns that around. Go back to what you already found worth keeping. Open it like a scrapbook you made, not a feed built to hold your attention.</p>
     </div>
   </section>
 
-  <section class="section gutter" id="how" aria-labelledby="intents-title">
+  <section class="section gutter" id="how" aria-labelledby="algo-title">
+    <div class="track">
+      <div class="head"><h2 id="algo-title">You set the algorithm</h2></div>
+      <div>
+        <div class="prose">
+          <p>Your algorithm comes down to two choices: what goes in a feed, and the order it comes back in. Filter by tag, source, or collection, then pick newest, oldest, random, or Resurface.</p>
+          <p>Resurface brings things back on a schedule that stretches as you go: a day after you see something, then two days, four, eight, and on up to six months. Nothing ranks your saves behind the scenes, and nothing learns from what you click.</p>
+        </div>
+        <dl class="sources feeds" aria-label="Example feeds">
+          <div class="source"><dt>Sunday watching</dt><dd>YouTube videos to watch, oldest first</dd></div>
+          <div class="source"><dt>Kitchen</dt><dd>Everything tagged <code>#cooking</code>, Resurface</dd></div>
+          <div class="source"><dt>Ideas</dt><dd>Your own notes, random</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section gutter" aria-labelledby="intents-title">
     <div class="track">
       <div class="head"><h2 id="intents-title">Two reasons you saved it</h2></div>
       <div>
         <div class="intents">
           <div class="intent">
             <h3>To watch or read</h3>
-            <p>The talk you meant to get to, the article you'll read later. Mark it done and it leaves the wall. Not ready yet? Skip it, and in the Resurface order it comes back another day.</p>
+            <p>The talk you meant to get to, the article for later. Mark it done and it leaves the wall. Not today? Skip it, and Resurface brings it back another day.</p>
             <span class="verb"><svg><use href="#i-check"/></svg>Done</span>
           </div>
           <div class="intent">
             <h3>To see again</h3>
-            <p>The quote, the recipe, the room you want to live in. These never get finished. Mark one seen, and in the Resurface order it waits a little longer each time before it comes back.</p>
+            <p>The quote, the recipe, the room you'd like to live in. Mark one seen, and Resurface waits a little longer each time before it comes back.</p>
             <span class="verb"><svg><use href="#i-eye"/></svg>Seen</span>
           </div>
         </div>
         <div class="prose">
-          <p>Every item can carry your own note, and the note comes back with it each time. Your own writing goes on the wall too: a ratio, a list, a line you don't want to forget.</p>
-          <p>Choose newest, oldest, random, or Resurface. Resurface brings things back on a growing schedule: a day after you see something, then two days, four, eight, and so on, up to six months. Build feeds of your own from tags, sources, and collections, like videos only, or everything tagged <code>#cooking</code>, each with its own order.</p>
-          <p>Finished with something? Done and archived saves wait on their own page, and you can bring any of them back. Search finds a half-remembered save by its title, note, site, or tags.</p>
+          <p>Add a note to anything, and it comes back with the card every time. Your own writing goes on the wall too: a ratio, a packing list, a line you don't want to forget.</p>
+          <p>Done and archived saves wait on their own page, and you can bring any of them back. Search finds a half-remembered save by its title, note, site, or tags.</p>
         </div>
       </div>
     </div>
@@ -877,7 +903,7 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
       <ul class="nots">
         <li><h3>No account, no cloud</h3><p>Ambivience runs on your own computer and keeps everything in one folder of your vault. There's nothing to sign up for.</p></li>
         <li><h3>No counters or streaks</h3><p>No unread numbers, badges, red dots, or notifications. It's there when you open it.</p></li>
-        <li><h3>No algorithm deciding for you</h3><p>The order is yours: newest, oldest, random, Resurface, or a feed you set up yourself.</p></li>
+        <li><h3>No ranking you can't see</h3><p>Your feeds show what you asked for, in the order you set.</p></li>
         <li><h3>No scraping or passwords</h3><p>Imports use the export files YouTube, Instagram, and your browser already give you.</p></li>
       </ul>
     </div>
@@ -947,6 +973,10 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
           <p>Your saves stay in your vault. To fill in titles and thumbnails, Ambivience visits the pages you saved, the way your browser would. Nothing else is sent anywhere, and the app only answers on your own computer.</p>
         </details>
         <details>
+          <summary>Is there any algorithm?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Only the one you set. Each feed shows what matches your filters, in the order you chose. Nothing is ranked by what holds your attention.</p>
+        </details>
+        <details>
           <summary>Why does my computer warn me before opening it?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
           <p>Ambivience isn't signed with a paid Apple or Microsoft developer certificate, so macOS and Windows ask you to confirm the first time you open each version. Each release lists checksums, so you can confirm your download is exactly what was published. The <a href="https://github.com/LeNPaul/ambivience-releases#check-your-download" target="_blank" rel="noopener">install guide</a> shows how.</p>
         </details>
@@ -980,9 +1010,14 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
 </main>
 
 <footer class="site-footer gutter">
-  <a class="wordmark" href="#top">ambivience</a>
-  <p><a href="https://github.com/LeNPaul/ambivience-releases/issues" target="_blank" rel="noopener">Report a bug or suggest an idea</a></p>
-  <p>&copy; 2026 Paul Le. Free for personal use.</p>
+  <div class="foot-brand">
+    <a class="wordmark" href="#top">ambivience</a>
+    <p>A scrapbook for everything you saved.</p>
+  </div>
+  <div class="foot-meta">
+    <p><a href="https://github.com/LeNPaul/ambivience-releases/issues" target="_blank" rel="noopener">Report a bug or suggest an idea</a></p>
+    <p>&copy; 2026 Paul Le. Free for personal use.</p>
+  </div>
 </footer>
 
 <dialog class="detail" id="detail" aria-labelledby="detail-title">
@@ -1393,6 +1428,21 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     };
     const handler = keys[e.key.length === 1 ? e.key.toLowerCase() : e.key];
     if (handler) { e.preventDefault(); handler(); }
+  });
+
+  // Theme toggle: light unless the visitor chose dark here
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle');
+  const syncThemeLabel = () => {
+    const label = root.dataset.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+    themeBtn.setAttribute('aria-label', label); themeBtn.title = label;
+  };
+  syncThemeLabel();
+  themeBtn.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('ambivience-theme', next); } catch (e) {}
+    syncThemeLabel();
   });
 
   // Downloads: put the visitor's system first. A browser can't tell Apple Silicon from Intel, so both Mac files stay.
