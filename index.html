@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ambivience</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Ambivience turns a folder in your Obsidian vault into a calm wall of everything you saved (videos, links, Instagram posts, notes) and keeps bringing it back to you.">
+<meta name="description" content="Ambivience gathers your Watch Later videos, bookmarks, Instagram saves, and notes into one calm wall, kept as plain markdown in your Obsidian vault. Free for macOS, Windows, and Linux.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ambivience.com/">
+<meta property="og:title" content="Ambivience">
+<meta property="og:description" content="Everything you saved, coming back around. One calm wall for your Watch Later videos, bookmarks, Instagram saves, and notes, kept in your Obsidian vault.">
+<meta name="twitter:card" content="summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
@@ -382,30 +387,26 @@ h2 {
 .download-band { background: var(--surface); border-block: 1px solid var(--line); }
 .download-band .section { padding-block: 88px; }
 .download-head p { margin-top: 16px; font-family: var(--font-serif); font-size: 19px; line-height: 1.5; color: var(--muted); max-width: 30rem; }
-.download-head .btn { margin-top: 28px; }
-.download-head .req { margin-top: 14px; font-size: 14px; color: var(--muted); }
-.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 28px; counter-reset: step; }
-.steps li { display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 4px 16px; counter-increment: step; }
-.steps li::before {
-  content: counter(step); grid-row: span 2;
-  width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line);
-  display: grid; place-items: center; font: 500 14px/1 var(--font-sans); color: var(--muted);
-  font-variant-numeric: tabular-nums;
-}
-.steps h3 { font: 500 15px/1.4 var(--font-sans); padding-top: 6px; }
-.steps p { font-family: var(--font-serif); font-size: 17px; line-height: 1.55; color: var(--muted); }
-.steps p a { color: var(--ink); text-underline-offset: 3px; }
-.cmd {
-  position: relative; margin-top: 10px; border-radius: 10px; background: var(--code-bg);
-  border: 1px solid var(--line);
-}
-.cmd pre { overflow-x: auto; padding: 12px 84px 12px 14px; font: 13px/1.7 var(--font-mono); }
-.cmd pre .p { color: var(--muted); user-select: none; }
-.cmd button {
-  position: absolute; top: 8px; right: 8px; height: 28px; padding: 0 10px; border-radius: 7px;
-  border: 1px solid var(--line); background: var(--surface); color: var(--ink);
-  font: 500 12px/1 var(--font-sans); cursor: pointer;
-}
+.download-head .req { margin-top: 14px; font-family: var(--font-sans); font-size: 14px; }
+.download-head .req a { color: var(--ink); text-underline-offset: 3px; }
+.dl { display: grid; gap: 40px; }
+.platforms { list-style: none; padding: 0; margin: 0; display: grid; border-top: 1px solid var(--line); }
+.platform { display: grid; gap: 10px; padding-block: 20px; border-bottom: 1px solid var(--line); }
+.platform-head { display: flex; align-items: baseline; gap: 12px; }
+.platform h3 { font-family: var(--font-display); font-size: 22px; line-height: 1.2; font-weight: 500; }
+.yours { font-size: 12px; color: var(--accent); }
+.platform-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.platform-btns .btn { white-space: normal; text-align: center; min-height: 40px; height: auto; padding-block: 8px; }
+.platform p { font-family: var(--font-serif); font-size: 16px; line-height: 1.55; color: var(--muted); }
+.first-run { display: grid; gap: 14px; }
+.first-run h3 { font: 500 15px/1.4 var(--font-sans); }
+.first-run p { font-family: var(--font-serif); font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 38rem; }
+.first-run a { color: var(--ink); text-underline-offset: 3px; }
+.os-steps { display: grid; gap: 10px; }
+.os-steps div { display: grid; gap: 2px 20px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 640px) { .os-steps div { grid-template-columns: 10rem minmax(0, 1fr); } }
+.os-steps dt { font: 500 14px/1.55 var(--font-sans); padding-top: 1px; }
+.os-steps dd { font-family: var(--font-serif); font-size: 16px; line-height: 1.55; }
 
 /* FAQ */
 .faq { border-top: 1px solid var(--line); }
@@ -419,32 +420,39 @@ h2 {
 .faq summary svg { width: 18px; height: 18px; color: var(--muted); flex: none; transition: transform 180ms var(--ease); }
 .faq details[open] summary svg { transform: rotate(45deg); }
 .faq details p { padding-bottom: 20px; font-family: var(--font-serif); font-size: 17px; line-height: 1.6; color: var(--ink); max-width: 38rem; }
+.faq details p a { text-underline-offset: 3px; }
+.site-footer p a { color: var(--ink); text-underline-offset: 3px; }
 
 /* Footer */
 .site-footer { max-width: var(--page); margin: 0 auto; padding-block: 48px 64px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; }
 .site-footer p { font-size: 14px; color: var(--muted); }
 
-/* ---------- Detail panel (mirrors the app's) ---------- */
+/* ---------- Detail view (mirrors the app's: full screen, centered 40rem column) ---------- */
 .wall .card { cursor: pointer; }
 html:has(.detail[open]) { overflow: hidden; }
 .detail {
-  margin: 0 0 0 auto; padding: 0; border: 0;
-  width: min(480px, 100%); max-width: 100%; height: 100dvh; max-height: 100dvh;
+  position: fixed; inset: 0; margin: 0; padding: 0; border: 0;
+  width: 100%; max-width: 100%; height: 100dvh; max-height: 100dvh;
   background: var(--surface); color: var(--ink); overflow-y: auto;
   overscroll-behavior: contain;
-  transform: translateX(0);
-  transition: transform 200ms var(--ease), overlay 200ms allow-discrete, display 200ms allow-discrete;
+  opacity: 1;
+  transition: opacity 200ms var(--ease), overlay 200ms allow-discrete, display 200ms allow-discrete;
 }
-.detail:not([open]) { transform: translateX(100%); }
-@starting-style { .detail[open] { transform: translateX(100%); } }
-.detail::backdrop { background: rgb(0 0 0 / 0.32); transition: opacity 200ms var(--ease), overlay 200ms allow-discrete, display 200ms allow-discrete; }
-@starting-style { .detail[open]::backdrop { opacity: 0; } }
-.detail-inner {
-  min-height: 100%;
-  padding: calc(16px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) calc(32px + env(safe-area-inset-bottom, 0px)) 16px;
+.detail:not([open]) { opacity: 0; }
+@starting-style { .detail[open] { opacity: 0; } }
+.detail::backdrop { background: transparent; }
+.detail-col {
+  width: 100%; max-width: 40rem; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px));
 }
-@media (min-width: 480px) { .detail-inner { padding-left: 24px; padding-right: max(24px, env(safe-area-inset-right, 0px)); } }
-.detail-nav { display: flex; align-items: center; gap: 4px; }
+@media (min-width: 640px) { .detail-col { padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); } }
+.detail-nav {
+  position: sticky; top: 0; z-index: 1; background: var(--surface);
+  display: flex; align-items: center; gap: 4px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px)); padding-bottom: 12px;
+}
 .round-btn {
   width: 36px; height: 36px; border-radius: 50%; border: 0; background: transparent;
   color: var(--muted); display: inline-grid; place-items: center; cursor: pointer;
@@ -453,7 +461,7 @@ html:has(.detail[open]) { overflow: hidden; }
 .round-btn:disabled { opacity: 0.4; cursor: default; }
 .round-btn svg { width: 20px; height: 20px; }
 .round-btn.close { margin-left: auto; }
-.detail-body { display: flex; flex-direction: column; gap: 20px; padding-top: 12px; }
+.detail-body { display: flex; flex-direction: column; gap: 20px; }
 .detail-media { border-radius: var(--radius-card); overflow: hidden; }
 .detail-media .thumb { border-radius: 0; }
 .detail h2 {
@@ -466,11 +474,28 @@ html:has(.detail[open]) { overflow: hidden; }
 .detail .btn-primary { align-self: flex-start; }
 .detail .btn-primary svg { width: 18px; height: 18px; }
 .note-head { display: flex; align-items: baseline; justify-content: space-between; font-size: 12px; color: var(--muted); }
+.note-label { display: flex; align-items: baseline; gap: 8px; }
+.note-edit {
+  font: 12px/1.4 var(--font-sans); color: var(--muted); background: none; border: 0; padding: 0;
+  text-decoration: underline; text-underline-offset: 2px; cursor: pointer;
+}
+.note-edit:hover { color: var(--ink); }
 .note-field {
-  margin-top: 8px; width: 100%; resize: vertical; min-height: 10rem;
+  margin-top: 8px; width: 100%; resize: vertical; max-height: 80dvh;
   padding: 12px; border-radius: var(--radius-control); border: 1px solid var(--line);
   background: var(--bg); color: var(--ink); font: 16px/1.55 var(--font-serif);
 }
+.note-read, .note-add {
+  display: block; width: 100%; margin-top: 8px; padding: 12px; text-align: left;
+  border: 1px solid transparent; border-radius: var(--radius-control); background: transparent;
+  font: 16px/1.55 var(--font-serif); color: var(--ink); cursor: text; overflow-wrap: anywhere;
+}
+.note-add { color: var(--muted); cursor: pointer; }
+.note-read:hover, .note-add:hover { background: var(--bg); }
+.note-read > * + * { margin-top: 0.6em; }
+.note-read h1, .note-read h2, .note-read h3 { font: 500 19px/1.35 var(--font-display); letter-spacing: 0; max-width: none; }
+.note-read ul, .note-read ol { padding-left: 1.2em; }
+.note-read blockquote { padding-left: 12px; border-left: 1px solid var(--accent); font-style: italic; }
 .detail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-top: 20px; border-top: 1px solid var(--line); }
 .act-btn {
   display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 12px;
@@ -541,18 +566,19 @@ html:has(.detail[open]) { overflow: hidden; }
       <p>Ambivience gathers your Watch Later videos, bookmarks, Instagram saves, and notes into one calm wall, kept as plain markdown in your Obsidian vault.</p>
       <div class="actions">
         <a class="btn btn-primary btn-lg" href="#download">Download Ambivience</a>
-        <span class="fine">Runs on your computer. No account.</span>
+        <span class="fine">Free for personal use. macOS, Windows, and Linux. No account.</span>
       </div>
     </div>
   </section>
 
   <section class="demo gutter" aria-label="Sample wall">
     <div class="wall-bar">
-      <p id="wall-hint">A sample wall. Change the order, or open a card to see its note.</p>
+      <p id="wall-hint">A sample wall. Try the Resurface order, or open a card to read its note.</p>
       <div class="segmented" role="group" aria-label="Order">
         <button type="button" data-order="newest" aria-pressed="true">Newest</button>
         <button type="button" data-order="oldest" aria-pressed="false">Oldest</button>
         <button type="button" data-order="random" aria-pressed="false">Random</button>
+        <button type="button" data-order="resurface" aria-pressed="false">Resurface</button>
         <button type="button" class="icon-btn" id="reshuffle" aria-label="Reshuffle" title="Reshuffle" hidden><svg><use href="#i-shuffle"/></svg></button>
       </div>
     </div>
@@ -739,18 +765,19 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
         <div class="intents">
           <div class="intent">
             <h3>To watch or read</h3>
-            <p>The talk you meant to get to, the article you'll read later. Mark it done and it leaves the wall. Not ready yet? Skip it and it comes back another day.</p>
+            <p>The talk you meant to get to, the article you'll read later. Mark it done and it leaves the wall. Not ready yet? Skip it, and in the Resurface order it comes back another day.</p>
             <span class="verb"><svg><use href="#i-check"/></svg>Done</span>
           </div>
           <div class="intent">
             <h3>To see again</h3>
-            <p>The quote, the recipe, the room you want to live in. These never get finished. Mark one seen and it goes to the back of the line until it's due again.</p>
+            <p>The quote, the recipe, the room you want to live in. These never get finished. Mark one seen, and in the Resurface order it waits a little longer each time before it comes back.</p>
             <span class="verb"><svg><use href="#i-eye"/></svg>Seen</span>
           </div>
         </div>
         <div class="prose">
           <p>Every item can carry your own note, and the note comes back with it each time. Your own writing goes on the wall too: a ratio, a list, a line you don't want to forget.</p>
-          <p>Choose newest, oldest, or random. Build feeds of your own from tags, sources, and collections, like videos only, or everything tagged <code>#cooking</code>.</p>
+          <p>Choose newest, oldest, random, or Resurface. Resurface brings things back on a growing schedule: a day after you see something, then two days, four, eight, and so on, up to six months. Build feeds of your own from tags, sources, and collections, like videos only, or everything tagged <code>#cooking</code>, each with its own order.</p>
+          <p>Finished with something? Done and archived saves wait on their own page, and you can bring any of them back. Search finds a half-remembered save by its title, note, site, or tags.</p>
         </div>
       </div>
     </div>
@@ -799,10 +826,11 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
           <div class="source"><dt><svg><use href="#i-video"/></svg>YouTube</dt><dd>Watch Later and your playlists, from a Google Takeout export. Watch Later comes in as things to watch, other playlists as things to see again.</dd></div>
           <div class="source"><dt><svg><use href="#i-ig"/></svg>Instagram</dt><dd>Saved posts and collections, from your Instagram data download.</dd></div>
           <div class="source"><dt><svg><use href="#i-bookmark"/></svg>Bookmarks</dt><dd>Exported bookmarks from Chrome, Firefox, or Safari, with folders kept as collections. Safari's Reading List comes in as things to read.</dd></div>
+          <div class="source"><dt><svg><use href="#i-note"/></svg>Links in your notes</dt><dd>Already keep reading lists in Obsidian? Pick the notes or folders, and Ambivience copies the links out of them. It reads only the notes you pick, and never changes them.</dd></div>
           <div class="source"><dt><svg><use href="#i-list"/></svg>A list of links</dt><dd>Paste them in, one per line.</dd></div>
         </dl>
         <div class="prose">
-          <p>Nothing is written until you've looked it over. Keep the collections you want, untick the rest, and decide what's for watching and what's for keeping. Links you already have are recognized, even when one is a <code>youtu.be</code> link and the other isn't. Titles and thumbnails are filled in for you.</p>
+          <p>Nothing is written until you've looked it over. Keep the collections you want, untick the rest, and decide what's for watching and what's for keeping. Links you already have are recognized, even when one is a <code>youtu.be</code> link and the other isn't. Titles, thumbnails, and publish dates are filled in for you.</p>
         </div>
       </div>
     </div>
@@ -847,9 +875,9 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     <div class="track">
       <div class="head"><h2 id="nots-title">What it leaves out, on purpose</h2></div>
       <ul class="nots">
-        <li><h3>No account, no cloud</h3><p>Ambivience runs on your own computer and reads one folder in your vault. There's nothing to sign up for.</p></li>
+        <li><h3>No account, no cloud</h3><p>Ambivience runs on your own computer and keeps everything in one folder of your vault. There's nothing to sign up for.</p></li>
         <li><h3>No counters or streaks</h3><p>No unread numbers, badges, red dots, or notifications. It's there when you open it.</p></li>
-        <li><h3>No algorithm deciding for you</h3><p>The order is yours: newest, oldest, random, or a feed you set up yourself.</p></li>
+        <li><h3>No algorithm deciding for you</h3><p>The order is yours: newest, oldest, random, Resurface, or a feed you set up yourself.</p></li>
         <li><h3>No scraping or passwords</h3><p>Imports use the export files YouTube, Instagram, and your browser already give you.</p></li>
       </ul>
     </div>
@@ -860,31 +888,48 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
       <div class="track">
         <div class="head download-head">
           <h2 id="dl-title">Download Ambivience</h2>
-          <p>Version 1.0 for macOS, Windows, and Linux. Set up takes a few minutes.</p>
-          <!-- TODO: point this at the packaged release (e.g. a GitHub release asset) before launch -->
-          <a class="btn btn-primary btn-lg" href="#download" data-download>Download Ambivience 1.0</a>
-          <p class="req">Needs Node.js 24 or later and a folder of notes, like an Obsidian vault.</p>
+          <p>Free for personal use. Install it like any app, and it opens in your browser. Everything stays on your computer.</p>
+          <p class="req">You'll need a folder of notes, like an Obsidian vault.</p>
+          <p class="req"><a href="https://github.com/LeNPaul/ambivience-releases/releases" target="_blank" rel="noopener">Release notes and older versions</a></p>
         </div>
-        <ol class="steps">
-          <li>
-            <h3>Install Node.js</h3>
-            <p>Get version 24 or later from <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a>.</p>
-          </li>
-          <li>
-            <h3>Unzip and start it</h3>
-            <p>Open a terminal in the unzipped folder and run:</p>
-            <div class="cmd">
-<pre id="cmd-text"><span class="p">$ </span>npm install
-<span class="p">$ </span>npm run build
-<span class="p">$ </span>npm start</pre>
-              <button type="button" id="copy-cmd">Copy</button>
-            </div>
-          </li>
-          <li>
-            <h3>Choose your vault</h3>
-            <p>Open <span class="inline-code">http://127.0.0.1:4747</span> in your browser and paste the path to your vault. Ambivience keeps everything in an Ambivience folder inside it and leaves the rest alone.</p>
-          </li>
-        </ol>
+        <div class="dl">
+          <ul class="platforms" id="platforms">
+            <li class="platform" data-os="mac">
+              <div class="platform-head"><h3>macOS</h3><span class="yours" hidden>Your system</span></div>
+              <div class="platform-btns">
+                <a class="btn btn-quiet" href="https://github.com/LeNPaul/ambivience-releases/releases/latest/download/Ambivience-mac-arm64.dmg">Apple Silicon (M1 or later)</a>
+                <a class="btn btn-quiet" href="https://github.com/LeNPaul/ambivience-releases/releases/latest/download/Ambivience-mac-x64.dmg">Intel</a>
+              </div>
+              <p>macOS 13 (Ventura) or later. Not sure which Mac you have? Apple menu → About This Mac: "Chip: Apple M…" is Apple Silicon, and "Processor: Intel" is Intel.</p>
+            </li>
+            <li class="platform" data-os="windows">
+              <div class="platform-head"><h3>Windows</h3><span class="yours" hidden>Your system</span></div>
+              <div class="platform-btns">
+                <a class="btn btn-quiet" href="https://github.com/LeNPaul/ambivience-releases/releases/latest/download/Ambivience-windows-x64-setup.exe">Download for Windows</a>
+              </div>
+              <p>Windows 10 or 11, 64-bit. Installs for your account only, with no admin needed.</p>
+            </li>
+            <li class="platform" data-os="linux">
+              <div class="platform-head"><h3>Linux</h3><span class="yours" hidden>Your system</span></div>
+              <div class="platform-btns">
+                <a class="btn btn-quiet" href="https://github.com/LeNPaul/ambivience-releases/releases/latest/download/Ambivience-linux-x64.tar.gz">Download for Linux</a>
+              </div>
+              <p>64-bit. Unpack it and run <span class="inline-code">./ambivience/ambivience</span>.</p>
+            </li>
+          </ul>
+
+          <div class="first-run">
+            <h3>Opening it the first time</h3>
+            <p>Ambivience isn't signed with a paid developer certificate, so your computer asks before opening it the first time. You do this once per version.</p>
+            <dl class="os-steps">
+              <div><dt>macOS 15 or later</dt><dd>Open Ambivience, click Done, then go to System Settings → Privacy &amp; Security. Scroll to the message about Ambivience and click Open Anyway.</dd></div>
+              <div><dt>macOS 13 or 14</dt><dd>Right-click Ambivience in Applications, choose Open, then Open again.</dd></div>
+              <div><dt>Windows</dt><dd>If "Windows protected your PC" appears, click More info, then Run anyway.</dd></div>
+            </dl>
+            <p>Ambivience then opens in your browser and asks where your vault is. On a Mac it sits in the menu bar. On Windows and Linux, quit it from the ••• menu in the app.</p>
+            <p>Updating, uninstalling, and checking your download are covered in the <a href="https://github.com/LeNPaul/ambivience-releases#readme" target="_blank" rel="noopener">install guide</a>.</p>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -894,8 +939,20 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
       <div class="head"><h2 id="faq-title">Questions</h2></div>
       <div class="faq">
         <details>
+          <summary>Is it free?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Yes, for personal use. Download it and run it on your own computers at no cost. The source code isn't published.</p>
+        </details>
+        <details>
           <summary>Does anything leave my computer?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
-          <p>Your saves stay in your vault. To fill in titles and thumbnails, Ambivience visits the pages you saved, the way your browser would. Nothing else is sent anywhere, and the wall only answers on your own machine.</p>
+          <p>Your saves stay in your vault. To fill in titles and thumbnails, Ambivience visits the pages you saved, the way your browser would. Nothing else is sent anywhere, and the app only answers on your own computer.</p>
+        </details>
+        <details>
+          <summary>Why does my computer warn me before opening it?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Ambivience isn't signed with a paid Apple or Microsoft developer certificate, so macOS and Windows ask you to confirm the first time you open each version. Each release lists checksums, so you can confirm your download is exactly what was published. The <a href="https://github.com/LeNPaul/ambivience-releases#check-your-download" target="_blank" rel="noopener">install guide</a> shows how.</p>
+        </details>
+        <details>
+          <summary>Will it remind me about things?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>It never sends notifications. Choose the Resurface order and things come back on a growing schedule: a day after you see one, then two days, four, eight, and so on, up to six months. Skipping something you haven't got to yet works the same way.</p>
         </details>
         <details>
           <summary>Do I need Obsidian?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
@@ -910,6 +967,10 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
           <p>Instagram's export doesn't include images, so Instagram saves show as cards with the account name, the collection, and your note. Tap through to see the post.</p>
         </details>
         <details>
+          <summary>How do I update it?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
+          <p>Download the new version and install it over the old one. Your vault and settings stay as they are. The <a href="https://github.com/LeNPaul/ambivience-releases#updating" target="_blank" rel="noopener">install guide</a> has the steps for each system.</p>
+        </details>
+        <details>
           <summary>What happens to my notes if I stop using it?<svg aria-hidden="true"><use href="#i-plus"/></svg></summary>
           <p>Nothing. They're plain markdown files in your vault, and they stay there, readable in Obsidian or any text editor.</p>
         </details>
@@ -920,11 +981,12 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
 
 <footer class="site-footer gutter">
   <a class="wordmark" href="#top">ambivience</a>
-  <p>A calm place for the things you saved. &copy; 2026</p>
+  <p><a href="https://github.com/LeNPaul/ambivience-releases/issues" target="_blank" rel="noopener">Report a bug or suggest an idea</a></p>
+  <p>&copy; 2026 Paul Le. Free for personal use.</p>
 </footer>
 
 <dialog class="detail" id="detail" aria-labelledby="detail-title">
-  <div class="detail-inner">
+  <div class="detail-col">
     <div class="detail-nav">
       <button type="button" class="round-btn" id="d-prev" aria-label="Previous card" title="Previous card"><svg aria-hidden="true"><use href="#i-left"/></svg></button>
       <button type="button" class="round-btn" id="d-next" aria-label="Next card" title="Next card"><svg aria-hidden="true"><use href="#i-right"/></svg></button>
@@ -939,8 +1001,13 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
       </div>
       <a class="btn btn-primary" id="d-open" href="#" target="_blank" rel="noopener noreferrer" hidden>Open original<svg aria-hidden="true"><use href="#i-external"/></svg></a>
       <div>
-        <div class="note-head"><label for="d-note" id="d-note-label">Your note</label><span id="d-status" aria-live="polite"></span></div>
-        <textarea class="note-field" id="d-note" rows="8"></textarea>
+        <div class="note-head">
+          <div class="note-label"><label for="d-note" id="d-note-label">Your note</label><button type="button" class="note-edit" id="d-edit" aria-label="Edit note">Edit</button></div>
+          <span id="d-status" aria-live="polite"></span>
+        </div>
+        <textarea class="note-field" id="d-note" rows="3" hidden></textarea>
+        <button type="button" class="note-add" id="d-add" hidden>Add a note</button>
+        <div class="note-read" id="d-read" role="group" aria-labelledby="d-note-label" tabindex="0"></div>
       </div>
       <div class="detail-actions" id="d-actions"></div>
       <div class="confirm" id="d-confirm" role="alert" hidden>
@@ -995,6 +1062,23 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     card.appendChild(bar);
   });
 
+  // Surfacing, as the app counts it: opening a card, Seen, or Skip
+  const DAY = 864e5;
+  const surfaced = new Map(); // tile -> { count, last }
+  const gapDays = (count) => Math.min(2 ** (Math.max(count, 1) - 1), 180);
+  const surface = (tile) => {
+    const s = surfaced.get(tile) || { count: 0, last: 0 };
+    s.count += 1; s.last = Date.now();
+    surfaced.set(tile, s);
+    return gapDays(s.count);
+  };
+  // Resurface: never surfaced is due from when it was saved; otherwise last + 1, 2, 4 … 128, then 180 days
+  const dueOf = (tile) => {
+    const s = surfaced.get(tile);
+    if (!s) return new Date(tile.dataset.saved + 'T12:00:00').getTime();
+    return s.last + gapDays(s.count) * DAY;
+  };
+
   // Ordering
   let order = 'newest';
   let seq = items.slice();
@@ -1003,6 +1087,7 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     const s = items.slice();
     if (o === 'newest') s.sort((a, b) => b.dataset.saved.localeCompare(a.dataset.saved));
     if (o === 'oldest') s.sort((a, b) => a.dataset.saved.localeCompare(b.dataset.saved));
+    if (o === 'resurface') s.sort((a, b) => dueOf(a) - dueOf(b));
     if (o === 'random') for (let i = s.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [s[i], s[j]] = [s[j], s[i]]; }
     return s;
   };
@@ -1047,12 +1132,13 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
   document.querySelectorAll('.segmented [data-order]').forEach(b => b.addEventListener('click', () => setOrder(b.dataset.order)));
   document.getElementById('reshuffle').addEventListener('click', () => setOrder('random'));
 
-  // Done / Archive / Delete with undo; Seen / Skip send a card to the back
+  // Done / Archive / Delete with undo; Seen / Skip push a card later in the Resurface order
   const toast = document.getElementById('toast');
   const toastText = document.getElementById('toast-text');
+  const toastUndo = document.getElementById('toast-undo');
   let toastTimer, lastRemoved = null;
-  const showToast = (msg) => {
-    toastText.textContent = msg; toast.hidden = false;
+  const showToast = (msg, undoable = true) => {
+    toastText.textContent = msg; toastUndo.hidden = !undoable; toast.hidden = false;
     clearTimeout(toastTimer); toastTimer = setTimeout(() => { toast.hidden = true; lastRemoved = null; }, 5000);
   };
   const endNote = document.getElementById('wall-end');
@@ -1069,8 +1155,16 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
       lastRemoved = tile;
       showToast(MESSAGES[act]);
     } else {
-      seq = seq.filter(t => t !== tile).concat(tile);
-      syncDom(); layout();
+      // The sample re-sorts at once; the app keeps the card in place until the wall reloads
+      const days = surface(tile);
+      const when = days === 1 ? '1 day' : days + ' days';
+      const verb = act === 'seen' ? 'Seen.' : 'Skipped.';
+      if (order === 'resurface') {
+        seq = sortBy('resurface'); syncDom(); layout();
+        showToast(verb + ' It comes back in ' + when + '.', false);
+      } else {
+        showToast(verb + ' In the Resurface order, it comes back in ' + when + '.', false);
+      }
     }
   };
 
@@ -1101,14 +1195,46 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     items.forEach(t => { t.hidden = false; }); removed = new Set(); checkEnd(); setOrder(order);
   });
 
-  // Detail panel: opens from the right, like the app
+  // Detail view: full screen, like the app
   const detail = document.getElementById('detail');
   const $ = (id) => document.getElementById(id);
   const dMedia = $('d-media'), dTitle = $('detail-title'), dMeta = $('d-meta'), dTags = $('d-tags');
   const dOpen = $('d-open'), dNote = $('d-note'), dNoteLabel = $('d-note-label'), dStatus = $('d-status');
+  const dRead = $('d-read'), dAdd = $('d-add'), dEdit = $('d-edit');
   const dActions = $('d-actions'), dConfirm = $('d-confirm'), dPrev = $('d-prev'), dNext = $('d-next');
   const notes = new Map();
   let current = null, saveTimer = null;
+
+  // Light markdown for the rendered note: headings, lists, quotes, bold, italic; a single newline is a line break
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const inline = (s) => esc(s)
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*(?!\s)(.+?)\*/g, '$1<em>$2</em>');
+  const LIST = /^\s*[-*]\s+/, QUOTE = /^>\s?/, HEAD = /^(#{1,6})\s+(.*)$/;
+  const md = (text) => {
+    const lines = text.replace(/\r/g, '').split('\n'), out = [];
+    let i = 0;
+    while (i < lines.length) {
+      const line = lines[i];
+      if (!line.trim()) { i++; continue; }
+      const h = line.match(HEAD);
+      if (h) { out.push('<h3>' + inline(h[2]) + '</h3>'); i++; continue; }
+      if (LIST.test(line)) {
+        const li = [];
+        while (i < lines.length && LIST.test(lines[i])) li.push('<li>' + inline(lines[i++].replace(LIST, '')) + '</li>');
+        out.push('<ul>' + li.join('') + '</ul>'); continue;
+      }
+      if (QUOTE.test(line)) {
+        const q = [];
+        while (i < lines.length && QUOTE.test(lines[i])) q.push(inline(lines[i++].replace(QUOTE, '')));
+        out.push('<blockquote>' + q.join('<br>') + '</blockquote>'); continue;
+      }
+      const p = [];
+      while (i < lines.length && lines[i].trim() && !HEAD.test(lines[i]) && !LIST.test(lines[i]) && !QUOTE.test(lines[i])) p.push(inline(lines[i++]));
+      out.push('<p>' + p.join('<br>') + '</p>');
+    }
+    return out.join('');
+  };
 
   const visible = () => seq.filter(t => !removed.has(t));
   const neighbour = (step) => { const v = visible(); const i = v.indexOf(current); return i < 0 ? null : v[i + step] || null; };
@@ -1147,6 +1273,47 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     saveTimer = setTimeout(save, 800);
   });
 
+  // The note shows rendered; clicking it, Edit, or Enter swaps in the editor, and leaving it saves
+  const showRead = () => {
+    const text = noteOf(current);
+    dNote.hidden = true;
+    dRead.hidden = !text.trim();
+    dAdd.hidden = !!text.trim();
+    dEdit.hidden = !text.trim();
+    dRead.innerHTML = md(text);
+  };
+  const startEditing = () => {
+    dNote.value = noteOf(current);
+    dRead.hidden = true; dAdd.hidden = true; dEdit.hidden = true;
+    dNote.hidden = false;
+    dNote.style.height = 'auto';
+    dNote.style.height = dNote.scrollHeight + 2 + 'px';
+    dNote.focus();
+    dNote.setSelectionRange(dNote.value.length, dNote.value.length);
+  };
+  dNote.addEventListener('input', () => {
+    dNote.style.height = 'auto';
+    dNote.style.height = dNote.scrollHeight + 2 + 'px';
+  });
+  // A press that blurs the editor finishes first, so the buttons under it don't move mid-click
+  let pressing = false, swapPending = false;
+  detail.addEventListener('pointerdown', () => { pressing = true; }, true);
+  window.addEventListener('pointerup', () => {
+    pressing = false;
+    if (swapPending) { swapPending = false; setTimeout(() => { if (current && dNote.hidden === false && document.activeElement !== dNote) showRead(); }, 0); }
+  }, true);
+  dNote.addEventListener('blur', () => {
+    save();
+    if (pressing) swapPending = true; else showRead();
+  });
+  dRead.addEventListener('click', (e) => {
+    if (e.target.closest('a') || String(window.getSelection())) return;
+    startEditing();
+  });
+  dRead.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); startEditing(); } });
+  dEdit.addEventListener('click', startEditing);
+  dAdd.addEventListener('click', startEditing);
+
   const actionButton = (act, label, iconId, key, quiet) =>
     '<button type="button" class="act-btn' + (quiet ? ' quiet' : '') + '" data-panel-act="' + act + '"' +
     (key ? ' title="' + label + ' (' + key + ')"' : '') + '>' + icon(iconId) + label + '</button>';
@@ -1166,8 +1333,9 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     dOpen.hidden = !d.url;
     if (d.url) dOpen.href = d.url;
     dNoteLabel.textContent = d.kind === 'note' ? 'Note' : 'Your note';
-    dNote.value = noteOf(tile);
+    showRead();
     dStatus.textContent = '';
+    surface(tile);
     dActions.innerHTML =
       (consume ? actionButton('done', 'Done', 'i-check', 'D') : actionButton('seen', 'Seen', 'i-eye', 'D')) +
       (consume ? actionButton('skip', 'Skip', 'i-skip', 'S') : '') +
@@ -1189,7 +1357,6 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     document.body.appendChild(toast);
     if (current && !removed.has(current)) current.querySelector('.card').focus({ preventScroll: true });
   });
-  detail.addEventListener('click', (e) => { if (e.target === detail) closeDetail(); });
   $('d-close').addEventListener('click', closeDetail);
   dPrev.addEventListener('click', () => { const t = neighbour(-1); if (t) fill(t); });
   dNext.addEventListener('click', () => { const t = neighbour(1); if (t) fill(t); });
@@ -1228,18 +1395,22 @@ Will Durant, summing up Aristotle. Pin above the desk.</template>
     if (handler) { e.preventDefault(); handler(); }
   });
 
-  // Copy setup commands
-  const copyBtn = document.getElementById('copy-cmd');
-  copyBtn.addEventListener('click', () => {
-    const text = 'npm install\nnpm run build\nnpm start';
-    const done = () => { copyBtn.textContent = 'Copied'; setTimeout(() => { copyBtn.textContent = 'Copy'; }, 1600); };
-    const fallback = () => {
-      const sel = window.getSelection(); const r = document.createRange();
-      r.selectNodeContents(document.getElementById('cmd-text')); sel.removeAllRanges(); sel.addRange(r);
-      copyBtn.textContent = 'Press Ctrl+C';
-    };
-    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
-  });
+  // Downloads: put the visitor's system first. A browser can't tell Apple Silicon from Intel, so both Mac files stay.
+  const ua = navigator.userAgent;
+  const plat = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || '';
+  const isTouchMac = /Mac/i.test(plat + ua) && navigator.maxTouchPoints > 1; // iPadOS reports itself as a Mac
+  const os = isTouchMac || /Android|iPhone|iPad/i.test(ua) ? null
+    : /Mac/i.test(plat) || /Macintosh/.test(ua) ? 'mac'
+    : /Win/i.test(plat) || /Windows/.test(ua) ? 'windows'
+    : /Linux/i.test(plat) || /Linux/.test(ua) ? 'linux' : null;
+  if (os) {
+    const row = document.querySelector('.platform[data-os="' + os + '"]');
+    row.parentNode.prepend(row);
+    row.querySelector('.yours').hidden = false;
+    row.querySelectorAll('.btn').forEach(b => b.classList.replace('btn-quiet', 'btn-primary'));
+    const names = { mac: 'macOS', windows: 'Windows', linux: 'Linux' };
+    document.querySelector('.lead .btn-primary').textContent = 'Download for ' + names[os];
+  }
 })();
 </script>
 </body>
